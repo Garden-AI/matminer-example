@@ -1,0 +1,13 @@
+name: MatMiner
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - scikit-image
+  - matminer
+  - pip:
+    - mlflow>=2.0
+    - boto3
+    - pymatgen
+
