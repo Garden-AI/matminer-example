@@ -2,15 +2,6 @@ import mlflow
 from garden_ai import GardenClient, step, Pipeline
 from pymatgen.core import Composition
 
-client = GardenClient()
-garden = client.create_garden(authors=['Ward, Logan'],
-                              title="Composition featurizer of Ward et al. 2016")
-garden.description = "Formation enthalpy predictor"
-garden.language = "English"
-garden.doi = '10.1038/npjcompumats.2016.28'
-
-client.register_metadata(garden)
-
 
 @step
 def parse_compositions(formulas: list[str]) -> list[Composition]:
@@ -39,6 +30,13 @@ def predict(x: list) -> list[float]:
     return loaded_model.predict(x)
 
 
+client = GardenClient()
+garden = client.create_garden(authors=['Ward, Logan'],
+                              title="Composition featurizer of Ward et al. 2016")
+garden.description = "Formation enthalpy predictor"
+garden.language = "English"
+garden.doi = '10.1038/npjcompumats.2016.28'
+
 predictor_pipeline = Pipeline(
     title="Formation enthalpy predictor from molecule compositions",
     steps=(parse_compositions, featurize_composition, predict),
@@ -47,5 +45,6 @@ predictor_pipeline = Pipeline(
 )
 
 garden.pipelines = [predictor_pipeline]
+client.register_metadata(garden)
 
 print(predictor_pipeline(["NaCl"]))
