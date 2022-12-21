@@ -43,6 +43,7 @@ predictor_pipeline = Pipeline(
     title="Formation enthalpy predictor from molecule compositions",
     steps=(parse_compositions, featurize_composition, predict),
     authors=garden.authors,
+    contributors=["Galewsky, Ben"]
 )
 
 garden.pipelines = [predictor_pipeline]
