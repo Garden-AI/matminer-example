@@ -68,6 +68,7 @@ def fit(X, data):
 
 if __name__ == "__main__":
     with mlflow.start_run():
+        mlflow.sklearn.autolog()
         data = load_data()
         x = create_featurizer(data, element_property_preset="magpie")
 
